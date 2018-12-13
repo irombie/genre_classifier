@@ -6,7 +6,7 @@ Download dataset http://marsyasweb.appspot.com/download/data_sets/
 Make sure directory is specified in script that generated maindataset.txt/csv
 
 ## Step 2
-Ensure to install libROSA library for raw audio feature extraction ttps://librosa.github.io/librosa/feature.html
+Ensure to install libROSA library for raw audio feature extraction https://librosa.github.io/librosa/feature.html
 
 ## Step 3
 Python program can be first run with feature extraction then by specifying the correct path in decision tree python script, the problem can be run by "python3 multi_class_tree.py" 
