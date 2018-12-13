@@ -88,12 +88,10 @@ genres. The labels in the dataset are blues, classical, country, disco, hip hop,
 30 seconds long. \\
 Feature extraction is an important part of the problem since many different features can be extracted using audio signals of the songs.  
 Considering all the work done on feature extraction from audio files, which will be described further in Section 2, we decided to proceed with 
-time-frequency features of the songs, which consist of spectrograms,
-WRITE AND EXPLAIN YOUR FEATURES. Spectrograms represent the strength of a signal given a specific time and a frequency. The spectrogram of an audio signal is calculated
-by taking short time Fourier transform of a time window extracted from the signal. DESCRIBE OTHER FEATURES\\
-Having time-frequency features in our hands, we decided to implement three different classifiers. The first one is kNN. DESCRIBE BRIEFLY YOUR APPROACH AND CLARIFY
-WHICH FEATURES YOU ARE USING \\
-The second classifier we implemented was decision trees. DESCRIBE BRIEFLY YOUR APPROACH AND CLARIFY WHICH FEATURES YOU ARE USING \\
+time-frequency features of the songs, which consist of Tempo, Pitch, Tune, Pitch, Spectrograms, etc... Tempo refers to average beats of the whole audio file, it use BPM (Beat per minute) as unit. We use Mel-frequency cepstral coefficients (MFCC) to capture the tune feature and represented as a time series data. The constant-Q transform (CQT) of an audio signal may represent the pitch feature of the audio file. The time series constant-Q power spectrum data is used as the feature. Spectrograms represent the strength of a signal given a specific time and a frequency. The spectrogram of an audio signal is calculated
+by taking short time Fourier transform of a time window extracted from the signal.\\
+Having time-frequency features in our hands, we decided to implement three different classifiers. The first one is k-NN. This is one of the most representative Lazy Learning Classifications. For the given training data with labels, the prediction of testing tests will be made depending on the distance between testing data entity and the k-nearest training data entity. \\
+The second classifier we implemented was decision trees. Decision trees are known to be optimal for binary classification but applying them to a large classification problem such as a 10-level one is still quite possible and has been applied before to complex problems. We used a binary classification tree similar to CART and used the Gini index for potential splits. The idea here is to reduce entropy at each level to make sure our splits do not break up individual classes to a high degree, this has to be done weighting each class as a contributing factor to the split. This potential splitting can be terminated by either a maximum number of nodes reached in which case we ensure to make the last level of the tree leaf nodes, or the case of max tree depth in which case at a specified depth, there exists only leaf nodes (the actual chosen classification). With this approach we can use features such as tempo, or more complex 2d-array features such as MFCC (Mel Frequency Cepestral Coefficients). 
 Our third classifier was convolutional neural networks. Convolutional neural networks are commonly used in image classification tasks. To be able to do that, 
 we constructed images using spectrograms extracted from the audio files. After some preprocessing, images are fed to the convolutional neural network. 
 To the best of our knowledge, we are the first ones to try convolutional neural networks that was not pre-trained before to tackle this problem.\\
@@ -115,16 +113,7 @@ and entails more information compared to many other features extracted from audi
 genre classification could be an interesting approach, even though the paper was not directly about genre classification problem. The paper lacks a proper 
 demonstration of the results they yielded and is not very specific about the experiment setup. This could be improved by doing proper experiments and 
 clearly explaining the results after the experiments with genre classification are completed.
-Second feature extraction method was \cite{tang2014feature}. As we mentioned in Cons of KNN-classification, the cost of 
-computational time may be a serious problem. It is caused by the calculation of distance, which is proportional the the dimension of our feature space 
-(In other word, the number of features). If we can find a efficiency approach to eliminate the irrelevant features, we can reduce the computational time 
-and improve our prediction at the same time. 
-Forward selection and backward elimination are two of the most common selection approaches. By building a search tree, the height of each level represents 
-the size of selection feature. Expands the node to next level until all features are included. The overall maximal accuracy combination is our final 
-choice. Since the complete tree will need O(n!) expanding node (for n feature in the beginning), it is more realistic to use greedy strategy to build the 
-tree (For each level, choose the maximal accuracy in that level to expand). The expanding nodes is $O(n^2)$. Although it increases the overhead to finish 
-the prediction, reducing the irrelevant feature also helps to explain the result of classification. 
-Then, we scanned the literature for papers which use the similar approach to ours. \cite{bahuleyan2018music} extends 
+Next, we scanned the literature for papers which use the similar approach to ours. \cite{bahuleyan2018music} extends 
 the work described in \cite{wyse2017audio}. The authors use two different feature sets, 
 one of the feature sets is spectrogram images and the other set is hand-crafted time and frequency domain features, such as tempo, MFCC, chroma features, 
 et cetera. The authors use the pre-trained weights from VGG-16 \cite{simonyan2014very} and they use transfer learning to achieve classification using spectrogram images and logistic regression, random forest, gradient boosting and 
@@ -133,19 +122,27 @@ support vector machines to achieve classification using hand-crafted features. T
   this tasks is MFCCs, using a combination of time and frequency domain features yielded better results than using only time or only frequency domain 
   features alone, and the best classification method is CNNs which are using spectrogram images as features. This paper explains each step in the experiment
    setup clearly, giving detailed results and analysis. Running an actual convolutional neural network on spectrogram images is our contribution to this work.
-   Also, in the dataset, we have 10 genres, which is more than \cite{bahuleyan2018music} has.
-[Chenyang] KNN Model-Based Approach in Classification[3]: One of the most representative lazy classification. The prediction is made by the majority 
+   Also, in the dataset, we have 10 genres, which is more than \cite{bahuleyan2018music} has.\\
+KNN Model-Based Approach in Classification \cite{Guo2003knn}: One of the most representative lazy classification. The prediction is made by the majority 
 voting of its nearest neighbors, which means we could save the time for training. As long as we list the features for each data point, KNN classification 
-is rather easy to implement. Even if we are facing the continuous feature like MFCC, we can setup the sample rate and use Dynamic Time Warping(DTW)[4] to 
-calculate the distance of two series data. The accuracy and precision are also good when there is enough representative data points. On the other side, 
+is rather easy to implement. Even if we are facing the continuous feature like MFCC, we can setup the sample rate and use Dynamic Time Warping(DTW)\cite{tang2010dtw} to calculate the distance of two series data. The accuracy and precision are also good when there is enough representative data points. On the other side, 
 we risk at taking more time on verifying procedure (Compare with other model-based learning). When the amount of data points is large, finding the 
 nearest neighbor may become a complex problem. Also, how to choose a good k value and a good distance calculation function may also be complicated. A bad 
 choice may compromise the final accuracy.
 In terms of implement algorithm, we don’t really need to calculate all distance and pick k-nearest. Instead, we can use k-d tree to reduce the time 
 complexity. Also, we expect the choice of k value will affect the accuracy and we will run several times under different k value to test. As the result, 
 we will build a table to store k’ neighbor neighbor for each data points (where k’ is larger than the maximum k value we are going to try). Although this 
-approach significantly increase the space complexity, the time complexity can be also significantly reduced. 
-[Nikhil] Evaluation: From Precision, Recall and F-Factor to ROC, Informedness, Markedness, and Correlation[6]: The assumption made is that Precision, 
+approach significantly increase the space complexity, the time complexity can be also significantly reduced. \\
+The feature selection method was \cite{tang2014feature}. When we use the KNN-classification, the cost of 
+computational time may be a serious problem. It is caused by the calculation of distance, which is proportional the the dimension of our feature space 
+(In other word, the number of features). If we can find a efficiency approach to eliminate the irrelevant features, we can reduce the computational time 
+and improve our prediction at the same time. 
+Forward selection and backward elimination are two of the most common selection approaches. By building a search tree, the height of each level represents 
+the size of selection feature. Expands the node to next level until all features are included. The overall maximal accuracy combination is our final 
+choice. Since the complete tree will need O(n!) expanding node (for n feature in the beginning), it is more realistic to use greedy strategy to build the 
+tree (For each level, choose the maximal accuracy in that level to expand). The expanding nodes is $O(n^2)$. Although it increases the overhead to finish 
+the prediction, reducing the irrelevant feature also helps to explain the result of classification.\\ 
+Evaluation: From Precision, Recall and F-Factor to ROC, Informedness, Markedness, and Correlation[6]: The assumption made is that Precision, 
 Recall and F-factor all contain a bias, if not understood properly, can falsely represent conclusions in data, especially in the handling of negative 
 outcomes. Without knowledge of informedness or markedness (and also a special attention to chance), examination of results often overlook important 
 elements such as positive negatives (Jaccard’s also does not account for this). In the article, Informedness, is defined as a way to quantify how 
@@ -167,13 +164,38 @@ problem (unnecessary fragmentation when many features being tested) or replicati
 when creating an ID3, without backtracking an optimal decision can be made locally but not globally. Also, decision trees cannot handle certain structures 
 efficiently such as XOR or multiplexer problems without being extremely large decision trees. In addition, information gain can pose a problem since 
 multi-variable values will be valued possibly creating a wrong classifier. The current state of decision trees is to incorporate in their algorithms, 
-a way to handle such problems.  I will consider this greatly in how I decide to build my decision tree. Knowing problems of information gain for example 
-can severely mess up my classification for certain genres of music that may have extreme data points. 
-
+a way to handle such problems. Concerning these two paper's relation, we can use a sense of proper informativeness when we use our Gini index to reduce as much entropy as possible. There stands a relationship between these two concepts, Gini index being a form of informativeness. Building a decision tree than could be seen as a level to level entropy reduction is a deciding complex factor in multi-label classification where entropy may still seem large after a single binary split. Hence, our definition of informativeness can be changed regarding this information. Information gain should be judged more strongly after at least after 3 levels of splits for a 10 level classification (8 labels can be classified). This influences how we built the decision tree, mainly ensuring the level of tree was apt for finding a proper test for information gain and likewise, entropy reduction. 
 \section{Proposed Method}
 We propose three different methods to tackle this problem and describe them in detail throughout this section.
 \subsection{k-NN}
+Our prediction will be made through the k-nearest neighbors. The distance between two entity will be calculate by Lp-norm and Dynamic time wrapping(as Figures below). Since usually not all k-nearest neighbors will be the same label, we will use majority labelling of neighbor in that case. 
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.2\textwidth]{dist}
+  \caption{How to calculate the distance between 2 entity}
+  \end{figure}
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.2\textwidth]{dtw}
+  \caption{Use Dynamic time wrapping to calculate the similarity between 2 time-series data}
+  \end{figure}
+\\Since the choice of k-value will significantly affect the performance, we will compare the accuracy between different k-values. One of the disadvantages of k-NN is that when dealing with too many features (causing high dimension space), the cost of calculating distance will significantly raise. Also, the effect from outliers will also rise and pose a risk. We reduce the irrelevant feature by feature selection algorithm.
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.2\textwidth]{knn}
+  \caption{Algorithm of k-NN}
+  \end{figure}
+  
 \subsection{Decision Tree}
+Decision trees are arguably the easiest decision streams to visualize. Each node split represents a binary decision (for binary classification trees) for information gain which can be seen as a greedy approach. At which node split point (assuming continuous data), would we gain the most information from? This question defines us creating new node levels. But first, you propose a feature extraction, each done individually by us. We used libROSA, a popular feature extractor/ audio visualizer for raw audio files. Using our dataset, we can load files one by into a script, in my case, a Python script. Extracting features one by one, we can specify single scalar results or 2d array results (e.g. tempo vs MFCC), into our data set. Our dataset also can have a rank attribute in its right-most column for each object to represent the class it is part of (e.g. Rock or Country). From then, we can feed our data set into our multi-label decision tree.
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.5\textwidth]{decisiontree.png}
+  \caption{A binary decision tree}
+  \end{figure}
+
+We can start off with a basic set of different attributes each making up different ranges of continuous data. Our Gini index will mark our potential split at the 2nd level. This split is dependent on most information gain, as in the classes represented in each split minimize class randomness in each specific group. The Gini index holds from a value of 0->1 (0 meaning complete equality, 1 meaning complete inequality). Running the algorithm, the tree is grown through the gini index and is terminated by a specific level of the tree or specific number of nodes created. We make sure we have a special check for our rank from 0->9 representing each class. After the tree is constructed, we have a prediction function that can be specified to have 10-fold cross-validation to test our accuracy. This approach, not considering any extensions such as pruning or maybe a more popular approach of random forest techniques, received an 8\% better than chance accuracy. 
+
 \subsection{Convolutional Neural Network}
 Convolutional neural networks are mostly used for image classification tasks. To make them applicable to our problem, we constructed spectrogram images using
 Python Librosa library\footnote{\url{https://librosa.github.io/librosa/}}. The sampling rate used for Fourier transform is the native sampling rate of the 
@@ -197,7 +219,7 @@ our dataset is small, a simple neural network architecture is considered. An arc
  Some dropout layers are added to prevent overfitting. The architecture of the network is given in Figure 2. \\
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=0.25\textwidth]{model}
+  \includegraphics[width=0.25\textwidth]{model.png}
   \caption{CNN architecture}
   \end{figure}
 
@@ -222,8 +244,24 @@ and fed the dataset to our algorithms. The confusion matrix for the convolutiona
   \includegraphics[width=0.5\textwidth]{conf_matrix}
   \caption{Confusion matrix for convolutional neural network approach}
   \end{figure}
+\\
+For k-NN classification, we test the accuracy under different k-value. As we can see from the below figure, the accuracy is rather low when value is small. The knee region is found in k=10, After that, the accuracy is increased but not so obviously.
 
-  PUT YOUR PLOTS HERE AND GIVE INDIVIDUAL ACCURACY
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.5\textwidth]{knnAccuracy.png}
+  \caption{Accyracu of k-NNN under different k-value}
+  \end{figure}
+\\  
+For the decision tree, we can see an accuracy of 18\% with the highest accuracy being in discerning Classical and Pop with the worst Rock and Metal. Doing pre-liminary tests, binary classifcation was ~100\% amongst two separate genres such as Pop and Jazz. See Fig. 9.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.5\textwidth]{meta-chart.jpeg}
+  \caption{Accuracy Among Genres for Decision Tree}
+  \end{figure}
+
+
 Lastly, we compare the results of different methods. The comparison is summarized in Table 1.
 \begin{center}
   \captionof{table}{Comparison of accuracies of different methods} \label{tab:title} 
@@ -244,8 +282,8 @@ k-NN, decision trees and neural networks and compared their performance. Convolu
 times better than random. Even though the dataset was small to run on neural networks, we got good results compared to many other studies in the literature. \cite{mckay2004issues} \\
 Based on the results, for future work, we plan to collect more data to prevent overfitting. Due to the scarcity of the dataset, we could not try complex
 neural networks. After collecting more data, more complex neural network architectures can be tried for solving this problem . Then, the signal itself can be
-preprocessed before extracting some features from it. For example, we want to improve the signal to noise ratio of the signal before processing it by using a pre-emphasis filter. 
-We plan to try chroma features
+preprocessed before extracting some features from it. For example, we want to improve the signal to noise ratio of the signal before processing it by using a pre-emphasis filter. A combination of approaches hold value. For example, regarding binary decisions, pre-liminary tests showed decision trees to be ~100\% accurate between discerning Rock and Jazz. 
+We also plan to try chroma features
 for k-NN and decision trees as they might yield better results. The spectrograms generated for neural network are composed only of the magnitude of the signal, 
 phase information is lost. This lossy representation might affect accuracy in a bad way. Hence, it would make more sense to save the phase information of the signal
 in a different matrix and use the magnitude and the phase to make classification. Considering our results, we believe that our approach is very 
