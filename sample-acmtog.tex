@@ -99,7 +99,6 @@ The organization of our report is as follows. Section 2 includes the literature 
 we implemented. Section 4 compares the results we gathered from different methods and gives a discussion. Section 5 concludes the paper while also talking about
 the future work.
 \section{Related Work}
-CONNECT DIFFERENT PAPERS TO EACH OTHER, I DID MINE
 Since we wanted to extract the most useful features for our task, we explored papers about feature extraction and feature selection. \cite{wyse2017audio} 
 is mostly concerned different ways to extract features from audio files because it explains the intuition behind the choice of spectrogram images. 
 It describes some experiments done with Mel Frequency Cepstral Coefficients (MFCCs) and points out that their accuracy is low because MFCCs are lossy 
@@ -142,7 +141,7 @@ the size of selection feature. Expands the node to next level until all features
 choice. Since the complete tree will need O(n!) expanding node (for n feature in the beginning), it is more realistic to use greedy strategy to build the 
 tree (For each level, choose the maximal accuracy in that level to expand). The expanding nodes is $O(n^2)$. Although it increases the overhead to finish 
 the prediction, reducing the irrelevant feature also helps to explain the result of classification.\\ 
-Evaluation: From Precision, Recall and F-Factor to ROC, Informedness, Markedness, and Correlation[6]: The assumption made is that Precision, 
+From Precision, Recall and F-Factor to ROC, Informedness, Markedness, and Correlation[6] we cab make ab assumption that Precision, 
 Recall and F-factor all contain a bias, if not understood properly, can falsely represent conclusions in data, especially in the handling of negative 
 outcomes. Without knowledge of informedness or markedness (and also a special attention to chance), examination of results often overlook important 
 elements such as positive negatives (Jaccard’s also does not account for this). In the article, Informedness, is defined as a way to quantify how 
@@ -154,7 +153,7 @@ properly applicable to data science). With proper considerations, our formed con
 (multi-class), are far less biased than Precision and Recall methods. Further direct relationships in Informedness, Markedness, and Matthew’s Correlation 
 with consideration in biased/unbiased and high/low degree of freedom all account for better confidence intervals when looking at our completed data. This 
 is directly applicable to our project in how we decide to classify our data to enhance to escape basic Recall and Precision tests. 
-[Nikhil] A Survey on Decision Tree Algorithm For Classification[7]: Though Decision Trees have strong characteristics in speed and learnability, they can 
+A Survey on Decision Tree Algorithm For Classification[7] shows how decision Trees have strong characteristics in speed and learnability, they can 
 be limited for example by value choice (higher values are used mostly) and over-classification (leading to inaccuracy). CHID’s approach can handle missing 
 values but has limited pruning capacity. CART’s approach can produce classification or regression trees and pruning but has only binary splitting. ID3’s 
 approach reduces the number of dividing classifications significantly and so forth. In addition to what exists, there is software that integrated decision 
