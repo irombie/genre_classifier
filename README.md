@@ -14,20 +14,20 @@ Usage:
 	Put CS235_kNN.py and /genres under the same folder and run
 	./python CS235_kNN.py
 
-# Decision Tree Code (Nikhil Gowda)
-## Usage
+## Decision Tree Code (Nikhil Gowda)
+### Usage
 Can be run by simply running the python script by extracting features. Feature extraction code is commented within the single python file. Dataset  (~1.2gb). Just specify path of each genre folder, the script should do the rest to extract all features, specifically tempo, MFCC, and Chroma CQT
-## Step 1
+### Step 1
 Get the dataset
 
-## Step 2
+### Step 2
 Ensure to install libROSA library for raw audio feature extraction https://librosa.github.io/librosa/feature.html
 
-## Step 3
+### Step 3
 Python program can be first run with feature extraction then by specifying the correct path in decision tree python script, the problem can be run by "python3 multi_class_tree.py" 
 
-## References/Extensions
+### References/Extensions
 Got much guidance from machinelearningmastery.com on how to build a decision tree. In addition, this code may be able to be extended to include various different datasets if parameters are changed to be more general. Future goals also may include to properly engage with 2d Array features next to single scalar elements instead of the requirement of there being same dimensional data. 
 
-## Collaborators
+### Collaborators
 I'd like to thank my wonderful partners of Irem and Chen who guided me through this project. 
