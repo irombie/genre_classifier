@@ -1,5 +1,5 @@
-# Music Genre Classification Using CNNs (Irem Ergun)
-## For the CNN: 
+# Music Genre Classification Using Time-Frequency Representation of MIDI files
+## For the CNN (Irem Ergun)
 ### The accuracy achieved is 70%, which is 7 times better than random assignment. This also outperforms the other two algorithms we implemented (kNN and decision trees) significantly. 
 - cnn.py is for constructing the convolutional neural network.
 - feature.py is for preprocessing for feature extraction
