@@ -1,2 +1,2 @@
-# cs235_report
+# Music Genre Classification Using CNNs
 report
