@@ -14,7 +14,7 @@ Usage:
 	Put CS235_kNN.py and /genres under the same folder and run
 	./python CS235_kNN.py
 
-### Decision Tree Code (Nikhil Gowda)
+# Decision Tree Code (Nikhil Gowda)
 ## Usage
 Can be run by simply running the python script by extracting features. Feature extraction code is commented within the single python file. Dataset  (~1.2gb). Just specify path of each genre folder, the script should do the rest to extract all features, specifically tempo, MFCC, and Chroma CQT
 ## Step 1
